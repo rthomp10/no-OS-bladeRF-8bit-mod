@@ -4241,7 +4241,7 @@ static int32_t ad9361_validate_trx_clock_chain(struct ad9361_rf_phy *phy,
 
 	/* CMOS Mode */
 	if (!(phy->pdata->port_ctrl.pp_conf[2] & LVDS_MODE) &&
-		(data_clk > 61440000UL)) {
+		(data_clk > 245760000UL)) {
 		dev_err(&phy->spi->dev,
 			"%s: Failed CMOS MODE DATA_CLK > 61.44MSPS", __func__);
 		return -EINVAL;
@@ -4427,7 +4427,7 @@ int32_t ad9361_calculate_rf_clock_chain(struct ad9361_rf_phy *phy,
 		__func__, tx_sample_rate, tx_intdec, rx_intdec,
 		rate_gov ? "Nominal" : "Highest OSR");
 
-	if (tx_sample_rate > 61440000UL)
+	if (tx_sample_rate > 245760000UL)
 		return -EINVAL;
 
 	clktf = tx_sample_rate * tx_intdec;

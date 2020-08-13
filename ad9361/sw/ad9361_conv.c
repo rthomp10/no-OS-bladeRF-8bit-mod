@@ -285,7 +285,7 @@ int32_t ad9361_dig_tune(struct ad9361_rf_phy *phy, uint32_t max_freq,
 	uint32_t s0, s1, c0, c1, tmp, saved = 0;
 	uint8_t field[2][16];
 	uint32_t saved_dsel[4], saved_chan_ctrl6[4], saved_chan_ctrl0[4];
-	uint32_t rates[3] = {25000000U, 40000000U, 61440000U};
+	uint32_t rates[3] = {25000000U, 40000000U, 245760000U};
 	uint32_t hdl_dac_version;
 
 	dev_dbg(&phy->spi->dev, "%s: freq %"PRIu32" flags 0x%X\n", __func__,
@@ -540,13 +540,13 @@ int32_t ad9361_post_setup(struct ad9361_rf_phy *phy)
 	flags = 0x0;
 
 	ret = ad9361_dig_tune(phy, ((conv->chip_info->num_channels > 4) ||
-		axiadc_read(st, 0x0004)) ? 0 : 61440000, flags);
+		axiadc_read(st, 0x0004)) ? 0 : 245760000, flags);
 	if (ret < 0)
 		return ret;
 
 	if (flags & (DO_IDELAY | DO_ODELAY)) {
 		ret = ad9361_dig_tune(phy, (axiadc_read(st, ADI_REG_ID)) ?
-			0 : 61440000, flags & BE_VERBOSE);
+			0 : 245760000, flags & BE_VERBOSE);
 		if (ret < 0)
 			return ret;
 	}
